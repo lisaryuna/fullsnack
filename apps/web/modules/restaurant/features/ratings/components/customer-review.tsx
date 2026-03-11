@@ -1,33 +1,33 @@
 import React from 'react'
 
-// 1. Definisikan tipe datanya sesuai persis dengan JSON dari API
+// 1. Define the data type exactly matching the JSON from the API
 export type CustomerReviewType = {
   id: string;
   rating: number;
   date: string;
-  comment?: string; // Tanda tanya (?) berarti opsional/bisa kosong
+  comment?: string; // The question mark (?) means it is optional/can be empty
   user: {
     id: string;
     name: string;
   };
 }
 
-// 2. Terapkan datanya ke komponen UI
+// 2. Apply the data to the UI component
 export const CustomerReview = ({ review }: { review: CustomerReviewType }) => (
   <div className="bg-green-100 border-green-600 border-2 p-4 rounded-lg flex flex-col items-start justify-center font-mono text-green-600">
     
-    {/* Bagian Nama dan Rating */}
+    {/* Name and Rating Section */}
     <div className="flex justify-between w-full mb-1">
       <span className="font-bold text-lg">{review.user.name}</span>
       <span className="text-sm">⭐ {review.rating}</span>
     </div>
     
-    {/* Bagian Tanggal */}
+    {/* Date Section */}
     <p className="text-xs mb-3 opacity-70">{review.date}</p>
     
-    {/* Bagian Komentar (Pakai logika kondisional kalau kosong) */}
+    {/* Comment Section (Using conditional logic if empty) */}
     <p className="text-base italic">
-      {review.comment ? `"${review.comment}"` : "Tidak ada komentar tertulis."}
+      {review.comment ? `"${review.comment}"` : "No written comment provided."}
     </p>
     
   </div>

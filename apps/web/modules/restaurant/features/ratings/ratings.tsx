@@ -1,28 +1,26 @@
 import React from 'react'
-// UPDATE: Import juga tipenya dari file customer-review
 import { CustomerReview, CustomerReviewType } from './components/customer-review'
 
-// 1. Tipe Data (Entity)
-export type Ratings = {
+export type RatingsData = {
   rating: number;
   numRatings: number;
-  reviews: CustomerReviewType[]; // UPDATE: Ganti any[] menjadi CustomerReviewType[]
+  reviews: CustomerReviewType[];
 };
 
-// 2. Fungsi Fetch & Model
+// Fetch Functions & Model
 async function fetchReviews(restaurantId: string) {
   const res = await fetch(`http://localhost:3002/restaurants/${restaurantId}/reviews`);
-  if (!res.ok) throw new Error('Gagal mengambil reviews');
+  if (!res.ok) throw new Error('Failed to fetch reviews');
   return res.json();
 }
 
 async function fetchRestaurantSummary(restaurantId: string) {
   const res = await fetch(`http://localhost:3002/restaurants/${restaurantId}`);
-  if (!res.ok) throw new Error('Gagal mengambil data restaurant');
+  if (!res.ok) throw new Error('Failed to fetch restaurant data');
   return res.json();
 }
 
-async function getRatings(restaurantId: string): Promise<Ratings> {
+async function getRatings(restaurantId: string): Promise<RatingsData> {
   const [restaurant, reviews] = await Promise.all([
     fetchRestaurantSummary(restaurantId),
     fetchReviews(restaurantId)
@@ -35,8 +33,7 @@ async function getRatings(restaurantId: string): Promise<Ratings> {
   };
 }
 
-// 3. Implementasi di Komponen UI
-export const RatingsComponent = async ({ restaurantId }: { restaurantId: string }) => {
+export const Ratings = async ({ restaurantId = "1" }: { restaurantId?: string }) => {
   const data = await getRatings(restaurantId);
 
   return (
@@ -45,10 +42,10 @@ export const RatingsComponent = async ({ restaurantId }: { restaurantId: string 
       {/* Summary */}
       <div className="py-4 text-center font-mono">
         <h1 className="text-2xl font-bold">Ratings: {data.rating} / 5</h1>
-        <p className="text-sm">Berdasarkan {data.numRatings} ulasan</p>
+        <p className="text-sm">Based on {data.numRatings} reviews</p>
       </div>
 
-      {/* List Review */}
+      {/* Reviews List */}
       <div className="grid grid-cols-2 gap-4 w-full">
         {data.reviews.map((review) => (
           <CustomerReview key={review.id} review={review} />
