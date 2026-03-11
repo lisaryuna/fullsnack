@@ -18,7 +18,7 @@ export const CustomerReview = ({ review }: { review: CustomerReviewType }) => (
     
     {/* Name and Rating Section */}
     <div className="flex justify-between w-full mb-1">
-      <span className="font-bold text-lg">{review.user.name}</span>
+      <span className="text-lg">{review.user.name}</span>
       <span className="text-sm">⭐ {review.rating}</span>
     </div>
     
