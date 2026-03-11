@@ -37,11 +37,12 @@ export const Ratings = async ({ restaurantId = "1" }: { restaurantId?: string })
   const data = await getRatings(restaurantId);
 
   return (
-    <div className="bg-purple-100 border-purple-600 border-2 p-4 rounded-lg flex flex-col items-center justify-center text-purple-600 font-mono">
+    <div className="bg-purple-100 border-purple-600 border-2 p-4 rounded-lg flex flex-col items-center justify-center text-purple-600">
       
-      {/* Summary Section */}
-      <div className="py-4 text-center">
-        <h1 className="text-2xl">Ratings</h1>
+      {/* Summary */}
+      <div className="py-4 text-center font-mono">
+        <h1 className="text-2xl font-bold">Ratings: {data.rating} / 5</h1>
+        <p className="text-sm">Based on {data.numRatings} reviews</p>
       </div>
 
       {/* Reviews List */}
